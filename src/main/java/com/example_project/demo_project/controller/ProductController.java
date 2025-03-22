@@ -1,26 +1,31 @@
 package com.example_project.demo_project.controller;
 
 import com.example_project.demo_project.model.Product;
+import com.example_project.demo_project.service.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/products")
 public class ProductController {
 
-    private List<Product> products = Arrays.asList(
-            new Product(1L, "Samsung", 110.5, "Some smart phones"),
-            new Product(2L, "Iphone", 240.0, "Some iphones"),
-            new Product(3L, "Sneaker", 150.0, "Some shoes"),
-            new Product(4L, "Xhaomi", 70.5, "Some android phones"));
+    // productservice
+    private final ProductService productService;
 
+    // @RequiredArgsConstructor bu annotation ile constructor yazmamıza gerek kalmadı
+    /*
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+    */
     // /api/v1/products/all -> bu url'de
     @GetMapping("/all")
     public List<Product> getAllProducts() {
-        return products;
+        return productService.getAllProducts();
     }
 }
