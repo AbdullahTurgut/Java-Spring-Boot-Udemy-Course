@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ProductService {
+public class ProductService implements IProductService {
     // Şimdi kendimiz bir veritabanı oluşturacağız.
     /*List<Product> products = Arrays.asList(
             new Product(1L, "Samsung", 110.5, "Some smart phones"),
@@ -27,8 +27,33 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
+    @Override
+    public Product addProduct(Product product) {
+        return productRepository.save(product);
+    }
+
+    @Override
+    public Product updateProduct(Long id, Product product) {
+        if (productRepository.findById(id).isPresent()) {
+            return productRepository.save(product);
+        }
+        return null;
+    }
+
+    @Override
+    public void deleteProduct(Long productId) {
+        if (productRepository.findById(productId).isPresent())
+            productRepository.deleteById(productId);
+    }
+
+    @Override
     public List<Product> getAllProducts() {
         return productRepository.findAll();
+    }
+
+    @Override
+    public Product getProductById(Long id) {
+        return productRepository.findById(id).orElseThrow(() -> new RuntimeException("Not found"));
     }
 
 
