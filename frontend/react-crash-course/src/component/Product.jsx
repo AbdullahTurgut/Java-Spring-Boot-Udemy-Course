@@ -6,7 +6,7 @@ export const Product = () => {
 
 
     return (
-        <div className='text-success'>
+        <div className='text-success justify-content-center'>
             <ProductList />
         </div>
     )
